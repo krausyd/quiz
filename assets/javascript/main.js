@@ -70,7 +70,6 @@ function showHighScores() {
 
 function saveScore() {
     const initialsInput = document.getElementById("initials");
-    console.log(initialsInput);
     if (!initialsInput.value) {
         alert("Please type your initials");
         return false;
@@ -147,6 +146,7 @@ function checkAnswerAndMove() {
         result = "Correct";
     } else {
         result = "Wrong";
+        time -= 10;
     }
     questionIndex++;
     if (questionIndex < questions.length) {
