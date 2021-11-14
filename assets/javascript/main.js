@@ -76,7 +76,7 @@ function saveScore() {
     }
     const savedScores = localStorage.getItem("highScores");
     let highScores = getHighScoresFromLocalStorage();
-    highScores.push({ initials: initialsInput.value, score: score + time});
+    highScores.push({ initials: initialsInput.value, score: Math.max(0, score + time)});
     highScores.sort(function(a, b) {
         return a.score - b.score;
     })
@@ -92,7 +92,7 @@ function saveScoreForm() {
     const h3 = document.createElement("h3");
     h3.innerText = "Your score was:";
     const h4 = document.createElement("h4");
-    h4.innerText = score + time;
+    h4.innerText = Math.max(0, score + time);
     const initialsInput = document.createElement("input");
     const initialsLabel = document.createElement("label");
     initialsInput.setAttribute("type", "text");
@@ -117,7 +117,7 @@ function endQuiz() {
     const h3 = document.createElement("h3");
     h3.innerText = "Your score was:";
     const h4 = document.createElement("h4");
-    h4.innerText = score + time;
+    h4.innerText = Math.max(0, score + time);
     const scoreDiv = document.createElement("div");
     scoreDiv.setAttribute("id", "score-div");
     const scoreSpan = document.createElement("span");
@@ -146,7 +146,11 @@ function checkAnswerAndMove() {
         result = "Correct";
     } else {
         result = "Wrong";
-        time -= 10;
+        if (time - 10 > 0) {
+            time -= 10;
+        } else {
+            time = 0;
+        }
     }
     questionIndex++;
     if (questionIndex < questions.length) {
@@ -180,11 +184,11 @@ function showQuestion() {
 
 function setTimer() {
     time--;
-    if (time == 0) {
+    if (time > 0) {
+        timerEl.innerText = time + " seconds remaining";
+    } else {
         alert("Your ran out of time!");
         endQuiz();
-    } else {
-        timerEl.innerText = time + " seconds remaining";
     }
 }
 
