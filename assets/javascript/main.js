@@ -57,8 +57,8 @@ function showHighScores() {
         li.innerText = highScores[i].initials + ": " + highScores[i].score;
         ul.appendChild(li);
     }
-    const playAgainButton = document.createElement("button");
-    playAgainButton.setAttribute("type", "button");
+    const playAgainButton = document.createElement("a");
+    playAgainButton.setAttribute("id", "play-again");
     playAgainButton.innerHTML = "Try Again";
     playAgainButton.addEventListener("click", function() {
         location.reload();
@@ -100,8 +100,8 @@ function saveScoreForm() {
     initialsInput.setAttribute("id", "initials");
     initialsLabel.setAttribute("for", "initials");
     initialsLabel.innerText = "Please type your initials: ";
-    const button = document.createElement("button");
-    button.setAttribute("type", "button");
+    const button = document.createElement("a");
+    button.setAttribute("id", "save-score");
     button.innerText = "Save score";
     button.addEventListener("click", saveScore);
     questionSectionEl.appendChild(h3);
@@ -122,14 +122,14 @@ function endQuiz() {
     scoreDiv.setAttribute("id", "score-div");
     const scoreSpan = document.createElement("span");
     scoreSpan.innerText = "Do you want to save your score?";
-    const scoreButton = document.createElement("button")
-    scoreButton.setAttribute("type", "button");
+    const scoreButton = document.createElement("a")
+    scoreButton.setAttribute("id", "save-score");
     scoreButton.innerText = "Yes";
     scoreButton.addEventListener("click", saveScoreForm);
     scoreDiv.appendChild(scoreSpan);
     scoreDiv.appendChild(scoreButton);
-    const playAgainButton = document.createElement("button");
-    playAgainButton.setAttribute("type", "button");
+    const playAgainButton = document.createElement("a");
+    playAgainButton.setAttribute("id", "play-again");
     playAgainButton.innerHTML = "Try Again";
     playAgainButton.addEventListener("click", function() {
        location.reload();
@@ -163,11 +163,13 @@ function checkAnswerAndMove() {
 function showQuestion() {
     questionSectionEl.innerHTML = "";
     timerEl.innerText = time + " seconds remaining";
+    timerEl.setAttribute("class", "timer");
     questionSectionEl.appendChild(timerEl);
     const question = questions[questionIndex];
     const h3 = document.createElement("h3");
     h3.innerText = question.question;
     const ul = document.createElement("ul");
+    ul.setAttribute("id", "question-ul")
     for(let i=0; i<question.options.length; i++) {
         const li = document.createElement("li");
         li.innerText = question.options[i];
